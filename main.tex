@@ -2,6 +2,7 @@
 
 \usepackage{graphicx}
 \usepackage{hyperref}
+\usepackage{minted}
 
 \begin{document}
 
@@ -15,6 +16,7 @@
 Design and implement a service with Golang programming language to work like a minimal k8s API server.
 
 Successful HTTP call is indicated by an HTTP OK \textit{2XX} status code and the failed call is indicated by a \textit{non-2XX} status code.
+So stick with this standard during your development.
 
 \section{Database}
 
@@ -33,23 +35,18 @@ This application needs simple user management and authentication so that users c
   \item Generate Token for the user (public endpoint)
 \end{itemize}
 
-
 \subsection{Authorization}
 
 There should be a mapping between users and the resource and verbs which a user have access to. For example, user `x` has access to resource `y` with verbs `get,update,delete` in ns `z`. There should be a default `admin` user which only this user can register new rbacs. The rbac itself is not required to have an rbac.
 
 \begin{itemize}
     \item Register (CRUD) a new rbac (auth-reuquired, only admin)
-  \end{itemize}
-
 \end{itemize}
-
 
 \subsection{Container}
 Each User must be able to create, update, delete and get container definitions:
 
-
-\begin{verbatim}
+\begin{minted}[]{yaml}
 apiVersion: v1
 kind: Container
 metadata:
@@ -57,32 +54,24 @@ metadata:
   name: string (required)
   namespace: string (required)
 spec:
-    name: string (required)
-    image: string (required)
-    args: []string (optional)
-    env: map[string]string (optional)
-    ports: []int (optional)
-\end{verbatim}
-
+  name: string (required)
+  image: string (required)
+  args: []string (optional)
+  env: map[string]string (optional)
+  ports: []int (optional)
+\end{minted}
 
 Validation:
 \begin{itemize}
-    \item The container spec should be validated.
-    \item User access should be checked
+  \item The container spec should be validated.
+  \item User access should be checked
 \end{itemize}
 
-
-
-
-
 API:
-
 \begin{itemize}
   \item Create/Update/Delete a new Container (auth-required)
   \item List Container by namespace and user (auth-required)
 \end{itemize}
-
-
 
 \subsection{Quota}
 
