@@ -40,7 +40,7 @@ This application needs simple user management and authentication so that users c
 There should be a mapping between users and the resource and verbs which a user have access to. For example, user `x` has access to resource `y` with verbs `get,update,delete` in ns `z`. There should be a default `admin` user which only this user can register new rbacs. The rbac itself is not required to have an rbac.
 
 \begin{itemize}
-    \item Register (CRUD) a new rbac (auth-reuquired, only admin)
+  \item Register (CRUD) a new rbac (auth-reuquired, only admin)
 \end{itemize}
 
 \subsection{Container}
@@ -77,7 +77,7 @@ API:
 
 Each user have a quota for container count and port count, and user can not create more containers than the quota, or request more total count ports in all created containers above the limit.
 
-The quota for each user can be set only by `admin` user and it does not require any rbac.
+The quota for each user can be set only by \textit{admin} user and it does not require any \textit{rbac}.
 
 \begin{itemize}
   \item Set quota for user (auth-required, admin only)
@@ -88,7 +88,8 @@ Notice: The public endpoints are accessible by everyone and auth-required endpoi
 
 \section{Instructions}
 
-Please create a GitHub repository in \href{https://github.com/orgs/snappcloud-learning/repositories}{snappcloud-learning repo}  and share it with us as soon as you started working on this assignment.
+Please create a GitHub repository in \href{https://github.com/orgs/snappcloud-learning/repositories}{snappcloud-learning organization} and share it
+with us as soon as you started working on this assignment.
 
 \begin{itemize}
   \item Tell us about the Trade-Offs and the important decisions which you made during the design and development.
