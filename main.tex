@@ -13,6 +13,7 @@
 \tableofcontents
 
 \section{Introduction}
+
 Design and implement a service with Golang programming language to work like a minimal k8s API server.
 
 Successful HTTP call is indicated by an HTTP OK \textit{2XX} status code and the failed call is indicated by a \textit{non-2XX} status code.
@@ -20,31 +21,35 @@ So stick with this standard during your development.
 
 \section{Database}
 
-Feel free to use any kind of database you want.
+Feel free to use any kind of database you want (e.g. MongoDB, etcd, etc.).
 
 \section{RESTFul API}
+
 \subsection{Authentication}
-Use JWT Tokens for authenticating users
+Use JWT Tokens for authenticating users. Feel free to decide on JSON structure of the token.
 
 \subsection{Users}
-This application needs simple user management and authentication so that users can register and receive a token in order to be able to use other endpoints to create URL, update URL, get the stats of the URLs and also get alerts for their URLs.
+This application needs simple user management and authentication so that users can register and receive a token in order to be able to use other endpoints to create containers, update containers, get the stats of the containers, etc.
 
 \subsubsection{Users Endpoints}
 \begin{itemize}
   \item Create a new user (public endpoint)
-  \item Generate Token for the user (public endpoint)
+  \item Generate Token for the user (auth-required)
 \end{itemize}
 
 \subsection{Authorization}
 
-There should be a mapping between users and the resource and verbs which a user have access to. For example, user `x` has access to resource `y` with verbs `get,update,delete` in ns `z`. There should be a default `admin` user which only this user can register new rbacs. The rbac itself is not required to have an rbac.
+There should be a mapping between users and the resource and verbs which a user have access to.
+For example, user \textit{x} has access to resource \textit{y} with verbs \textit{get}, \textit{create}, \textit{update} and \textit{delete} in namespace \textit{z}.
+There should be a default \textit{admin} user which \textbf{only} this user can register new rbacs.
+The rbac itself is not required to have an rbac.
 
 \begin{itemize}
   \item Register (CRUD) a new rbac (auth-reuquired, only admin)
 \end{itemize}
 
 \subsection{Container}
-Each User must be able to create, update, delete and get container definitions:
+Each User must be able to create, update, delete and get container definitions as below:
 
 \begin{minted}[]{yaml}
 apiVersion: v1
@@ -62,29 +67,29 @@ spec:
 \end{minted}
 
 Validation:
+
 \begin{itemize}
   \item The container spec should be validated.
-  \item User access should be checked
+  \item container name should be unique in each namespace.
+  \item User access should be checked in each request with his/her JWT token.
 \end{itemize}
 
 API:
+
 \begin{itemize}
-  \item Create/Update/Delete a new Container (auth-required)
-  \item List Container by namespace and user (auth-required)
+  \item Create/Update/Delete a Container (auth-required)
+  \item List Containers by namespace and user (auth-required)
 \end{itemize}
 
 \subsection{Quota}
 
 Each user have a quota for container count and port count, and user can not create more containers than the quota, or request more total count ports in all created containers above the limit.
 
-The quota for each user can be set only by \textit{admin} user and it does not require any \textit{rbac}.
+The quota for each user can be set only by \textit{admin} user, so it does not require any \textit{rbac}.
 
 \begin{itemize}
   \item Set quota for user (auth-required, admin only)
 \end{itemize}
-
-
-Notice: The public endpoints are accessible by everyone and auth-required endpoints need the token for authentication.
 
 \section{Instructions}
 
